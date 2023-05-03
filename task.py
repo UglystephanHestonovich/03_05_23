@@ -29,7 +29,7 @@ def hello_world7():
         b = human_months[request.json['n']]
         return {'n': b, 'units': 'month', 'type': 'dog'}
 
-a = []
+a = {}
 @app.route('/queueclear/', methods=['POST'])
 def hello_world8():
     a.clear()
@@ -54,6 +54,69 @@ def hello_world8_2():
         return {'status': 'ok', 'person': man}
     else:
         return {'status': 'fail'}
+
+
+
+big_plate = {'type':'Большая'}
+big_plate['plate'] = list()
+
+medium_plate = {'type':'Средняя'}
+medium_plate['plate'] = list()
+
+small_plate = {'type':'Маленькая'}
+small_plate['plate'] = list()
+
+
+@app.route('/clearall/', methods = ['POST'])
+def task_13():
+    big_plate['plate'].clear()
+    medium_plate['plate'].clear()
+    small_plate['plate'].clear()
+    return {'status': 'ok'}
+
+
+@app.route('/wash/', methods = ['POST'])
+def task_13_1():
+    if request.json['type'] == 'Маленькая':
+        small_plate['plate'].append(request.json['color'])
+
+    if request.json['type'] == 'Средняя':
+        medium_plate['plate'].append(request.json['color'])
+    if request.json['type'] == 'Большая':
+        big_plate['plate'].append(request.json['color'])
+    return {'status':'ok'}
+
+
+@app.route('/take/', methods=['POST'])
+def task_13_2():
+    if request.json['type'] == 'Маленькая':
+        if len(small_plate['plate']) == 0 :
+            return {'status':'fail'}
+        else :
+            x = small_plate['plate'].pop(-1)
+            return {'status':'ok','color':x}
+
+    if request.json['type'] == 'Средняя':
+        if len(medium_plate['plate']) == 0:
+            return {'status':'fail'}
+        else :
+            x = medium_plate['plate'].pop(-1)
+            print({'status':'ok','color':x})
+            return {'status':'ok','color':x}
+    if request.json['type'] == 'Большая':
+        if len(big_plate['plate']) == 0:
+            return {'status':'fail'}
+        else :
+            x = big_plate['plate'].pop(-1)
+            print({'status': 'ok','color': x})
+            return {'status':'ok','color':x}
+
+
+
+
+
+
+
 
 
 
